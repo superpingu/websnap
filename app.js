@@ -5,10 +5,13 @@ const app = express();
 
 let browser
 (async () => {
-  browser = await puppeteer.launch();
+  browser = await puppeteer.launch({args: ["--no-sandbox", "--disabled-setupid-sandbox"]});
 })();
 
-app.get('/websnap/img/:url', async (req, res) => {
+app.get('/websnap/img/', async (req, res) => {
+  if(!req.query.url)
+    res.status(400).send('error: missing param url');
+
   try {
     const page = await browser.newPage();
 
@@ -18,7 +21,7 @@ app.get('/websnap/img/:url', async (req, res) => {
     if(!isNaN(width) && !isNaN(height))
       await page.setViewport({width: width, height: height});
     // navigate to the page and take the screenshot
-    await page.goto('https://' + req.params.url, {waitUntil: 'networkidle2'});
+    await page.goto(req.query.url, {waitUntil: 'networkidle2'});
     const screenshot = await page.screenshot({type: 'jpeg', quality:10});
     // return the image as jpeg
     res.set('Content-Type', 'image/jpeg')
