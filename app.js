@@ -21,7 +21,9 @@ app.get('/websnap/img/', async (req, res) => {
     if(!isNaN(width) && !isNaN(height))
       await page.setViewport({width: width, height: height});
     // navigate to the page and take the screenshot
-    await page.goto(req.query.url, {waitUntil: 'networkidle2'});
+    await page.goto(req.query.url, {timeout: 60000, waitUntil: 'domcontentloaded'});
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
     const screenshot = await page.screenshot({type: 'jpeg', quality:10});
     // return the image as jpeg
     res.set('Content-Type', 'image/jpeg')
