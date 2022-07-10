@@ -24,7 +24,7 @@ app.get('/websnap/img/', async (req, res) => {
     await page.goto(req.query.url, {timeout: 60000, waitUntil: 'domcontentloaded'});
     await new Promise(resolve => setTimeout(resolve, 1000));
 
-    const screenshot = await page.screenshot({type: 'jpeg', quality:10});
+    const screenshot = await page.screenshot({type: 'jpeg', quality:50});
     // return the image as jpeg
     res.set('Content-Type', 'image/jpeg')
     res.send(screenshot);
