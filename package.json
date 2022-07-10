@@ -1,0 +1,15 @@
+{
+  "name": "websnap",
+  "version": "1.0.0",
+  "description": "A web API to take snapshots of websites",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "superpingu",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "puppeteer": "^15.3.2"
+  }
+}
